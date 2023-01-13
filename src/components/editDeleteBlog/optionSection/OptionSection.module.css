@@ -1,0 +1,12 @@
+.wrapper {
+    display: flex;
+    align-self: baseline;
+    padding: 16px 0 0 12px;
+    gap:12px;
+
+}
+
+.imgWrapper{
+    width: 24px;
+    height: 24px;
+}

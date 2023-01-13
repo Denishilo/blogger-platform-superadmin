@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 24px;
+}
+
+.button {
+    cursor: pointer;
+    width: 118px;
+    height: 36px;
+    background: #F8346B;
+    border: none;
+    box-shadow: 0px 4px 18px rgba(248, 52, 107, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+}
