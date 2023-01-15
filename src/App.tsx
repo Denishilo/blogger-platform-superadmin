@@ -6,9 +6,12 @@ import {Blogs} from "./components/blogs/blogs";
 import {Posts} from "./components/posts/posts";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {useAppSelector} from "./redux/store";
+import {Blog} from "./components/blog/blog";
+import {Post} from "./components/posts/post/post";
 
 function App() {
-    const isPageBlogsActive = useAppSelector<boolean>(state => state.app.isPageBlogsActive)
+    const isPageBlogsActive = useAppSelector<boolean>(state => state.app.isShowBlogs)
+
     return (
         <>
             <Header/>
@@ -18,6 +21,8 @@ function App() {
                     <Routes>
                         <Route path={'/'} element={<Navigate to={'/blogs'}/>}/>
                         <Route path={'/blogs'} element={isPageBlogsActive ? <Blogs/> : <Navigate to={'/posts'}/>}/>
+                        <Route path={`/blog/:id`} element={<Blog/>}/>
+                        <Route path={`/post/:id`} element={<Post/>}/>
                         <Route path={'/posts'} element={<Posts/>}/>
                     </Routes>
                 </div>

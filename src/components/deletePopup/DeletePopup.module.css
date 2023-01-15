@@ -1,0 +1,46 @@
+.wrapper{
+    width: 378px;
+    height: 228px;
+    padding: 17px 24px;
+    background: #FCFBFB;
+    border-radius: 2px;
+    position: relative;
+}
+.titleWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    color: #797476;
+    margin-bottom: 49px;
+
+}
+.titleWrapper::after {
+    content: '';
+    position: absolute;
+    width: 378px;
+    height: 1px;
+    top:60px;
+    left: 0;
+    background: #DEDBDC;
+}
+.imgWrapper{
+    width: 24px;
+    height: 24px;
+}
+
+.message {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #1A1718;
+    margin-bottom: 42px;
+    text-align: center;
+}
+
+.buttonsWrapper{
+    display: flex;
+    justify-content: space-between;
+}

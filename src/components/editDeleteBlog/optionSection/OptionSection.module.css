@@ -1,8 +1,9 @@
 .wrapper {
     display: flex;
     align-self: baseline;
-    padding: 16px 0 0 12px;
+    margin: 16px 0 0 12px;
     gap:12px;
+    cursor: pointer;
 
 }
 

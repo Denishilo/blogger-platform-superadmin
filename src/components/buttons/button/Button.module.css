@@ -1,0 +1,15 @@
+.wrapper{
+    width: 124px;
+    height: 36px;
+}
+
+.button{
+    cursor: pointer;
+    width: 100%;
+    border: 1px solid #F8346B;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 10px 0;
+}
