@@ -1,10 +1,39 @@
 .wrapper{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.4);
+    position: fixed;
+    top:0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+    z-index: 100;
+}
+
+.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+
+.content{
     width: 378px;
     height: 228px;
     padding: 17px 24px;
     background: #FCFBFB;
     border-radius: 2px;
     position: relative;
+    transform: scale(0.5);
+    transition: 0.5s all;
+}
+
+.contentActive {
+    transition: 0.5s all;
+    transform: scale(1);
 }
 .titleWrapper{
     display: flex;
@@ -27,6 +56,7 @@
     background: #DEDBDC;
 }
 .imgWrapper{
+    cursor: pointer;
     width: 24px;
     height: 24px;
 }

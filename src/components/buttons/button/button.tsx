@@ -4,7 +4,7 @@ export const Button = (props: DeleteButtonPropsType) => {
     const {title, color, background, callback} = props
     return (
         <div className={s.wrapper}>
-            <button onClick={callback} className={s.button} style={{color: `${color}`, background: `${background}`}}>
+            <button type={'submit'} onClick={callback} className={s.button} style={{color: `${color}`, background: `${background}`}}>
                 {title}
             </button>
         </div>

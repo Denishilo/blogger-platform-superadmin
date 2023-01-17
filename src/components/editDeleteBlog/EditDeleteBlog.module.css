@@ -1,25 +1,11 @@
-.wrapper {
+.content {
     width: 149px;
     height: 89px;
     background: #ffffff;
     border-radius: 2px;
-    position: relative;
-
-
-}
-.wrapper::after {
-    content: '';
-    display: block;
+    right: 0;
+    top:0;
     position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid  transparent ;
-    border-bottom: 15px solid #ffffff;
-    right: 4px;
-    top: -9px;
-
-
 }
 
 .section{
