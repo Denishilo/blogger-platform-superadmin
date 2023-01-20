@@ -7,9 +7,7 @@
 }
 
 .titleDescription{
-    font-weight: 400;
     font-size: 14px;
-    line-height: 24px;
     color: #737067;
     margin-bottom: 6px;
 }
@@ -24,20 +22,14 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
     color: #1A1718;
     margin-bottom: 24px;
 }
 
 .blogTitle{
-    font-weight: 400;
     font-size: 14px;
-    line-height: 24px;
     color: #737067;
 }
-
 
 .textField{
     width: 100%;

@@ -1,0 +1,11 @@
+.postsWrapper{
+    padding: 0 64px 0 24px;
+}
+
+.postsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap:18px;
+    row-gap: 32px;
+    margin-bottom: 44px;
+}

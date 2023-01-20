@@ -1,6 +1,4 @@
 import s from "../blog/Blog.module.css";
-import arrowRight from "../../img/arrow_right.svg";
-import arrowBack from "../../img/arrowBack.svg";
 import bigAva from "../../img/photoBigAvatar.svg";
 import styles from './AddBlog.module.css'
 import {useNavigate} from "react-router-dom";
@@ -10,6 +8,8 @@ import {Button} from "../buttons/button/button";
 import TextField from "@mui/material/TextField";
 import {useFormik} from "formik";
 import {addNewBlogTC} from "../../reducers/blogsReducer";
+import {ItemTitle} from "../itemTitle/itemTitle";
+import {GoBackSection} from "../goBackSection/goBackSection";
 
 export const AddBlog = () => {
     const dispatch = useAppDispatch()
@@ -42,7 +42,6 @@ export const AddBlog = () => {
                 errors.description = 'Max length of description is 500 symbols'
             }
             return errors
-
         },
         onSubmit(values) {
             dispatch(toggleAddBlogFormAC())
@@ -54,15 +53,8 @@ export const AddBlog = () => {
 
     return (
         <div className={s.blogWrapper}>
-            <div className={s.titleWrapper}>
-                <h3 className={s.title}>Blogs</h3>
-                <img src={arrowRight} alt="arrow"/>
-                <p>Add</p>
-            </div>
-            <div onClick={goBackToBlogs} className={s.navigateBack}>
-                <img src={arrowBack} alt="back"/>
-                <span className={s.text}>Back to blogs</span>
-            </div>
+            <ItemTitle name={'Blogs'} addBlogs={true}/>
+            <GoBackSection callback={goBackToBlogs} title={'blogs'}/>
             <div className={s.content}>
                 <div className={s.blogAvatar}>
                     <img className={s.imgBig} src={bigAva} alt="blogImg"/>
