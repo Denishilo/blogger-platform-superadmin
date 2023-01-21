@@ -4,7 +4,7 @@ import {Button} from "../buttons/button/button";
 import {useEffect} from "react";
 
 export const DeletePopUp = (props: DeletePopUpPropsType) => {
-    const {active, setActive, deleteBlog} = props
+    const {active, setActive, deleteItem,title} = props
 
     useEffect(() => {
         if (active) {
@@ -15,29 +15,30 @@ export const DeletePopUp = (props: DeletePopUpPropsType) => {
         }
     }, [active])
 
-    const cancelDeleteBlog = () => {
+    const cancelDelete = () => {
+        console.log('cancel delete post')
         setActive(false)
     }
 
-    const deleteBlogHandler = () => {
-        deleteBlog('')
+    const deleteHandler = () => {
+        deleteItem()
     }
 
     return (
-        <div className={active ? `${s.wrapper} ${s.active}` : s.wrapper} onClick={cancelDeleteBlog}>
+        <div className={active ? `${s.wrapper} ${s.active}` : s.wrapper} onClick={cancelDelete}>
             <div className={active ? `${s.content} ${s.contentActive}` : s.content} onClick={(e) => {
                 e.stopPropagation()
             }}>
                 <div className={s.titleWrapper}>
-                    <h3>Delete a blog</h3>
-                    <div onClick={() => setActive(false)} className={s.imgWrapper}>
+                    <h3>Delete a {title}</h3>
+                    <div onClick={cancelDelete} className={s.imgWrapper}>
                         <img src={closeIcon} alt="close"/>
                     </div>
                 </div>
-                <p className={s.message}>Are you sure you want to delete this blog?</p>
+                <p className={s.message}>Are you sure you want to delete this {title}?</p>
                 <div className={s.buttonsWrapper}>
-                    <Button callback={cancelDeleteBlog} title={'No'} color={'#FCFBFB'} background={'#F8346B'}/>
-                    <Button callback={deleteBlogHandler} title={'Yes'} color={'#F8346B'} background={'#FCFBFB'}/>
+                    <Button callback={cancelDelete} title={'No'} color={'#FCFBFB'} background={'#F8346B'}/>
+                    <Button callback={deleteHandler} title={'Yes'} color={'#F8346B'} background={'#FCFBFB'}/>
                 </div>
             </div>
         </div>
@@ -48,5 +49,6 @@ export const DeletePopUp = (props: DeletePopUpPropsType) => {
 type DeletePopUpPropsType = {
     active: boolean,
     setActive: (value: boolean) => void
-    deleteBlog: (id: string) => void
+    deleteItem: () => void
+    title:string
 }

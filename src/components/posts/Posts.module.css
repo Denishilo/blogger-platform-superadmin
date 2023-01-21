@@ -9,3 +9,9 @@
     row-gap: 32px;
     margin-bottom: 44px;
 }
+
+.addButtonWrapper{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 24px;
+}

@@ -9,6 +9,8 @@ import {useAppSelector} from "./redux/store";
 import {Blog} from "./components/blog/blog";
 import {Post} from "./components/posts/post/post";
 import {AddBlog} from "./components/addBlog/addBlog";
+import {EditBlog} from "./components/editBlog/editBlog";
+import {AddEditPostPopup} from "./components/addEditPostPopup/addEditPostPopup";
 
 function App() {
     const isPageBlogsActive = useAppSelector<boolean>(state => state.app.isShowBlogs)
@@ -25,10 +27,13 @@ function App() {
                         <Route path={`/blog/:id`} element={<Blog/>}/>
                         <Route path={`/post/:id`} element={<Post/>}/>
                         <Route path={'/posts'} element={<Posts/>}/>
+                        {/*<Route path={'/posts/edit'} element={<AddEditPostPopup setActive={()=>{}} active={true} isEdit={true}/>}/>*/}
                         <Route path={'/blogs/add'} element={<AddBlog/>}/>
+                        <Route path={'/blogs/edit'} element={<EditBlog/>}/>
                     </Routes>
                 </div>
             </section>
+
         </>
     );
 }

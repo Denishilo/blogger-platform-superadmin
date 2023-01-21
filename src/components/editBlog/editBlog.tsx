@@ -1,17 +1,22 @@
 import s from "../blog/Blog.module.css";
 import bigAva from "../../img/photoBigAvatar.svg";
-import styles from './AddBlog.module.css'
+import styles from '../addBlog/AddBlog.module.css'
 import {useNavigate} from "react-router-dom";
-import {clearCurrentBlogAC, setCurrentBlogIdAC, toggleAddBlogFormAC} from "../../reducers/appReducer";
-import {useAppDispatch} from "../../redux/store";
+import {clearCurrentBlogAC, setCurrentBlogIdAC} from "../../reducers/appReducer";
+import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {Button} from "../buttons/button/button";
 import TextField from "@mui/material/TextField";
 import {useFormik} from "formik";
-import {addNewBlogTC} from "../../reducers/blogsReducer";
 import {ItemTitle} from "../itemTitle/itemTitle";
 import {GoBackSection} from "../goBackSection/goBackSection";
+import {useEffect} from "react";
+import {deleteBlogsAC, editBlogTC} from "../../reducers/blogsReducer";
 
-export const AddBlog = () => {
+export const EditBlog = () => {
+    const nameBlog = useAppSelector<string>(state => state.app.currentBlog.name)
+    const blogId = useAppSelector<string>(state => state.app.currentBlog.id)
+    const description = useAppSelector<string>(state => state.app.currentBlog.description)
+    const websiteUrl = useAppSelector<string>(state => state.app.currentBlog.websiteUrl)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -19,14 +24,12 @@ export const AddBlog = () => {
         dispatch(clearCurrentBlogAC())
         dispatch(setCurrentBlogIdAC(''))
         navigate('/blogs')
-        dispatch(toggleAddBlogFormAC())
     }
-
     const formik = useFormik({
         initialValues: {
-            name: '',
-            description: '',
-            websiteUrl: '',
+            name: nameBlog,
+            description: description,
+            websiteUrl: websiteUrl,
         },
         validate(values) {
             const errors: ErrorsType = {}
@@ -44,17 +47,20 @@ export const AddBlog = () => {
             }
             return errors
         },
-        async onSubmit(values) {
-            dispatch(toggleAddBlogFormAC())
-            await dispatch(addNewBlogTC(values))
-            formik.resetForm()
-            navigate('/blogs')
+       async onSubmit(values) {
+            dispatch(clearCurrentBlogAC())
+            dispatch(setCurrentBlogIdAC(''))
+           await dispatch(editBlogTC(blogId,values))
+                formik.resetForm()
+                navigate('/blogs')
+
+
         }
     })
 
     return (
         <div className={s.blogWrapper}>
-            <ItemTitle name={'Blogs'} addBlog={true}/>
+            <ItemTitle name={'Blogs'} showItem={true} editBlog={true} nameBlog={nameBlog}/>
             <GoBackSection callback={goBackToBlogs} title={'blogs'}/>
             <div className={s.content}>
                 <div className={s.blogAvatar}>
@@ -66,6 +72,7 @@ export const AddBlog = () => {
                             <TextField label='Blog name' className={styles.textField} id="standard-basic"
                                        variant="standard"
                                        {...formik.getFieldProps('name')}
+
 
                             />
                             {formik.touched.name && formik.errors.name &&
@@ -89,7 +96,7 @@ export const AddBlog = () => {
                                 <div style={{color: 'red'}}>{formik.errors.description}</div>}
                         </div>
                         <div className={styles.buttonWrapper}>
-                            <Button title={'Add Blog'} color={'#FCFBFB'} background={'#F8346B'} callback={() => {
+                            <Button title={'Edit Blog'} color={'#FCFBFB'} background={'#F8346B'} callback={() => {
                             }}/>
                         </div>
                     </form>
