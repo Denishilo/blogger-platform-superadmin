@@ -1,7 +1,7 @@
 import s from './CompressedPost.module.css'
 import mainImg from '../../../img/mainImgPost.svg'
 import {useAppDispatch} from "../../../redux/store";
-import {setCurrentPostIdAC} from "../../../reducers/appReducer";
+import {setCurrentPostAC, setCurrentPostIdAC} from "../../../reducers/appReducer";
 import {deletePostTC, PostType} from "../../../reducers/postsReducer";
 import {useNavigate} from "react-router-dom";
 import {DeletePopUp} from "../../deletePopup/deletePopUp";
@@ -12,6 +12,7 @@ import {EditDeleteSection} from "../../editDeleteSection/editDeleteSection";
 export const CompressedPost = (props: CompressedPostPropsType) => {
     const dispatch = useAppDispatch()
     const {title, createdAt, blogName, id} = props.post
+    const {post} = props
     const {isAddPostOpen,toggleAddPostPopUp} = props
     const formatCreatedDate = new Date(createdAt).toLocaleDateString('ru')
     const navigate = useNavigate()
@@ -30,6 +31,7 @@ export const CompressedPost = (props: CompressedPostPropsType) => {
     }
     const toggleOptions = () => {
         setIsShowOptions(!isShowOptions)
+        dispatch(setCurrentPostAC(post))
     }
 
     return (

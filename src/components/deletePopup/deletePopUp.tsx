@@ -4,7 +4,7 @@ import {Button} from "../buttons/button/button";
 import {useEffect} from "react";
 
 export const DeletePopUp = (props: DeletePopUpPropsType) => {
-    const {active, setActive, deleteItem,title} = props
+    const {active, setActive, deleteItem, title} = props
 
     useEffect(() => {
         if (active) {
@@ -50,5 +50,5 @@ type DeletePopUpPropsType = {
     active: boolean,
     setActive: (value: boolean) => void
     deleteItem: () => void
-    title:string
+    title: string
 }

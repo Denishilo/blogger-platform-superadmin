@@ -7,6 +7,7 @@ import {deletePostsAC, getPostsTC, PostType} from "../../reducers/postsReducer";
 import {ItemTitle} from "../itemTitle/itemTitle";
 import {Button} from "../buttons/button/button";
 import {AddEditPostPopup} from "../addEditPostPopup/addEditPostPopup";
+import {getBlogsTC} from "../../reducers/blogsReducer";
 
 export const Posts = () => {
     const dispatch = useAppDispatch()
@@ -14,8 +15,9 @@ export const Posts = () => {
 
     const [isAddPostOpen, setIsAddPostOpen] = useState<boolean>(false)
 
-    const toggleAddPostPopUp = (value:boolean) => {
+    const toggleAddPostPopUp = (value: boolean) => {
         setIsAddPostOpen(value)
+        dispatch(getBlogsTC())
     }
 
     useEffect(() => {
@@ -26,12 +28,14 @@ export const Posts = () => {
     }, [])
 
     const postsList = posts.map(post => {
-        return <CompressedPost key={post.id} post={post} isAddPostOpen={isAddPostOpen} toggleAddPostPopUp={toggleAddPostPopUp}/>
+        return <CompressedPost key={post.id} post={post} isAddPostOpen={isAddPostOpen}
+                               toggleAddPostPopUp={toggleAddPostPopUp}/>
     })
 
-    if(isAddPostOpen){
-        return <AddEditPostPopup active={isAddPostOpen} setActive={toggleAddPostPopUp} isAdd={true}/>
+    if (isAddPostOpen) {
+        return <AddEditPostPopup active={isAddPostOpen} setActive={toggleAddPostPopUp}/>
     }
+
     return (
         <div className={s.postsWrapper}>
             <ItemTitle name={'Posts'}/>

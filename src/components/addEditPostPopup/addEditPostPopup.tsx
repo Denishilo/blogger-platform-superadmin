@@ -4,27 +4,30 @@ import addEditPicture from '../../img/addEditPost.svg'
 import TextField from "@mui/material/TextField";
 import {Button} from "../buttons/button/button";
 import {useFormik} from "formik";
-import {SearchField} from "../searchField/searchField";
-import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../redux/store";
 import {setEditPostModeAC} from "../../reducers/appReducer";
+import {useState} from "react";
+import {BlogType} from "../../api/blogsAPI";
 
 export const AddEditPostPopup = (props: AddEditPostPopupPropsType) => {
+
+    const blogs = useAppSelector<Array<BlogType>>(state => state.blogs)
+    const postName = useAppSelector<string>(state => state.app.currentPost.title)
+    const postDescription = useAppSelector<string>(state => state.app.currentPost.content)
     const isEdit = useAppSelector<boolean>(state => state.app.isEditPostMode)
     const {active, setActive} = props
-const dispatch =  useAppDispatch()
+    const dispatch = useAppDispatch()
+
     const cancelDelete = () => {
         setActive(false)
         dispatch(setEditPostModeAC(false))
     }
-    useEffect(()=>{
 
-    },[isEdit])
     const formik = useFormik({
         initialValues: {
-            postName: '',
+            postName: isEdit ? postName  :'',
             blog: '',
-            description: '',
+            description: isEdit ? postDescription : '',
         },
         validate(values) {
             const errors: ErrorsType = {}
@@ -42,13 +45,30 @@ const dispatch =  useAppDispatch()
             }
             return errors
         },
-        async onSubmit(values) {
+        onSubmit(values) {
+            console.log(values)
             // dispatch(toggleAddBlogFormAC())
             // await dispatch(addNewBlogTC(values))
-            formik.resetForm()
+            // formik.resetForm()
             // navigate('/blogs')
         }
     })
+
+    const filterData = (query: string, data: BlogType[]) => {
+        if (!query) {
+            return data;
+        } else {
+            return data.filter((d) => d.name.toLowerCase().includes(query));
+        }
+    };
+    const [searchQuery, setSearchQuery] = useState("");
+    const [isShowSearchResult, setIsShowSearchResult] = useState(true)
+    const dataFiltered = filterData(searchQuery, blogs);
+
+    const selectResult = (value:string) => {
+        setSearchQuery(value)
+        setIsShowSearchResult(false)
+    }
 
     return (
         <div className={active ? `${s.wrapper} ${s.active}` : s.wrapper} onClick={cancelDelete}>
@@ -66,10 +86,9 @@ const dispatch =  useAppDispatch()
                 </div>
                 <div className={s.contentForm}>
                     <form onSubmit={formik.handleSubmit}>
-
                         <div className={s.info}>
 
-                            <TextField label='Post name' className={s.textField} id="standard-basic"
+                            <TextField label='Post Name' className={s.textField} id="standard-basic"
                                        variant="standard"
                                        {...formik.getFieldProps('postName')}
 
@@ -77,12 +96,27 @@ const dispatch =  useAppDispatch()
                             {formik.touched.postName && formik.errors.postName &&
                                 <div style={{color: 'red'}}>{formik.errors.postName}</div>}
 
-                            {!isEdit && <SearchField/>}
-                            {/*<TextField label='Blog' className={s.textField} id="standard-basic"*/}
-                            {/*           variant="outlined" {...formik.getFieldProps('blog')}*/}
-                            {/*/>*/}
-                            {/*{formik.touched.blog && formik.errors.blog &&*/}
-                            {/*    <div style={{color: 'red'}}>{formik.errors.blog}</div>}*/}
+                            {!isEdit && <div>
+                                <TextField label='Blog' className={s.textFieldSearch} id="standard-basic" fullWidth
+                                           variant="outlined" {...formik.getFieldProps('blog')}
+                                           onClick={()=>setIsShowSearchResult(true)}
+                                           // onChange={(e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+                                           //     console.log(e.currentTarget.value)
+                                           //     setSearchQuery(e.currentTarget.value);}}
+                                           // value={searchQuery}
+                                />
+
+                                {searchQuery && isShowSearchResult && <div className={s.searchWrapper}>
+                                    {dataFiltered.map((d) => (
+                                        <div onClick={() => selectResult(d.name)}  className={s.searchResult}
+                                             key={d.id}>
+                                            {d.name}
+                                        </div>))}  </div>}
+                                {formik.touched.blog && formik.errors.blog &&
+                                    <div style={{color: 'red'}}>{formik.errors.blog}</div>}
+                            </div>}
+
+
                             <div>
                                 <h4 className={s.titleDescription}>Description</h4>
                                 <TextField
@@ -96,11 +130,9 @@ const dispatch =  useAppDispatch()
                                     <div style={{color: 'red'}}>{formik.errors.description}</div>}
                             </div>
                             <div className={s.buttonWrapper}>
-                                <Button title={'Publish'} color={'#FCFBFB'} background={'#FB85A6'} callback={() => {
-                                }}/>
+                                <Button title={'Publish'} color={'#FCFBFB'} background={'#FB85A6'} callback={()=>{}}/>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -112,10 +144,8 @@ const dispatch =  useAppDispatch()
 ////////////types/////////////
 
 export type AddEditPostPopupPropsType = {
-    isAdd?: boolean,
-    isEdit?: boolean,
-    active?: boolean,
-    setActive: (value:boolean) => void
+    active: boolean,
+    setActive: (value: boolean) => void
 }
 
 type ErrorsType = {
